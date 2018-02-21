@@ -33,4 +33,3 @@ def add_client(ip,active):
         con = sqlite3.connect(DB_LOCATION)
     else:
         update_client(ip)
-    
