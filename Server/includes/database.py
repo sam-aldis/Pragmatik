@@ -19,9 +19,18 @@ def get_clients():
         install()
         return get_clients()
 
-def get_client(ip):
+def update_client(ip):
     con = sqlite3.connect(DB_LOCATION)
 
-def add_client(ip,active):
+def get_client(ip):
     con = sqlite3.connect(DB_LOCATION)
+    cur = con.cursor()
+    res = cur.execute("SELECT * FROM trackers WHERE ip=?", ip)
+    return res
+
+def add_client(ip,active):
+    if get_client(ip) == None:
+        con = sqlite3.connect(DB_LOCATION)
+    else:
+        update_client(ip)
     
