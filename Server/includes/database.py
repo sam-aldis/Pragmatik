@@ -15,3 +15,7 @@ def get_clients():
     except:
         install()
         get_clients()
+    con.close()
+
+def add_client(ip,active):
+    con = sqlite3
