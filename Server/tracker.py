@@ -57,8 +57,15 @@ class Server():
         while 1:
             data, ip = sh.recvfrom(1024)
             rq = RequestHandler(ip,thread_pool)
+            cli = database.get_clients()
+            resp = "["
+            for i in cli:
+                resp += i[0]
+            resp += "]"
+            sh.sendto(bytes(resp, "utf-8"), ip)
+            database.add_client(str(ip[0]),1)
             rq.start()
-            print(thread_pool)
+            
 
 server = Server(thread_pool,"127.0.0.1")
 server.start()
