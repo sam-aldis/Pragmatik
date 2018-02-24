@@ -34,8 +34,10 @@ class MultiThread(Thread):
 
 
 class RequestHandler(MultiThread):
-    def __init__(self, ip, thread_pool):
-        self.ip = ip
+    def __init__(self, ip, data, thread_pool):
+        self.ip = ip[0]
+        self.port = ip[1]
+        self.data = data
         MultiThread.__init__(self,thread_pool)
 
     def run(self):
@@ -56,16 +58,18 @@ class Server():
         sh.bind(self.addr)
         while 1:
             data, ip = sh.recvfrom(1024)
-            rq = RequestHandler(ip,thread_pool)
+            rq = RequestHandler(ip,data, thread_pool)
             cli = database.get_clients()
             resp = "["
+            c = 0
             for i in cli:
+                if c != 0:
+                    resp += ", "
                 resp += i[0]
             resp += "]"
             sh.sendto(bytes(resp, "utf-8"), ip)
             database.add_client(str(ip[0]),1)
             rq.start()
             
-
 server = Server(thread_pool,"127.0.0.1")
 server.start()

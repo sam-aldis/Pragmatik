@@ -1,10 +1,27 @@
 from OpenSSL import crypto
+from Crypto.Cipher import AES
+from hashlib import md5
 import random
+
+class PublicKey():
+    def __init__(self, password, data=""):
+        self.password = hashlib.md5(password.encode("UTF-8").digest())
+        self.data = data
+        self.crypt = AES.new(self.password)
+
+    def encrypt():
+        dlen = len(self.data)
+        to_add = (16 - (dlen % 16))
+        self.data.ljust(to_add)
+        return self.crypt.encrypt(self.data)
+
+    def decrypt():
+        return self.crypt.decrypt(self.data).strip()
+    
 
 def create_key(username,uid):
     key = crypto.PKey()
     key.generate_key(crypto.TYPE_RSA, 2014)
-
     cert = crypto.X509()
     cert.get_subject().C = "PG"
     cert.get_subject().ST = str(uid)

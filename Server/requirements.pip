@@ -3,6 +3,7 @@ cffi==1.11.4
 cryptography==2.1.4
 idna==2.6
 pycparser==2.18
+pycrypto==2.6.1
 pyOpenSSL==17.5.0
 pysqlite3==0.1.0
 six==1.11.0

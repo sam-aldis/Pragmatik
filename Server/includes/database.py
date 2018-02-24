@@ -44,11 +44,10 @@ def scan_and_decrease():
     results = res.fetchall()
     for result in results:
         new_count = result[1] - 1
-        cur.execute("UPDATE trackers SET  connected=? WHERE ip=?", (new_count, result[0]))
+        cur.execute("UPDATE trackers SET connected=? WHERE ip=?", (new_count, result[0]))
         con.commit()
     con.close()
     
-
 def get_client(ip):
     con = sqlite3.connect(DB_LOCATION)
     cur = con.cursor()
